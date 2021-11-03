@@ -2,6 +2,7 @@ package com.amrabdelhamiddiab.googlemapdemocont2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,11 +11,15 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.amrabdelhamiddiab.googlemapdemocont2.databinding.ActivityMapsBinding
+import kotlinx.coroutines.launch
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
-    private lateinit var mMap: GoogleMap
+    private val alexandria = LatLng(31.20588470349843, 29.91779871421426)
+    private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val shapes by lazy {
+        Shapes()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +34,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        map = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        map.addMarker(MarkerOptions().position(alexandria).title("Marker in Sydney"))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(alexandria, 6f))
+        map.uiSettings.apply {
+            isZoomControlsEnabled = true
+        }
+        lifecycleScope.launch{
+            shapes.addCircle(map)
+        }
     }
 }

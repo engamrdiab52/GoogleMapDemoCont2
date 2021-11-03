@@ -2,6 +2,7 @@ package com.amrabdelhamiddiab.googlemapdemocont2
 
 import android.graphics.Color
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.PolylineOptions
@@ -55,5 +56,21 @@ class Shapes {
                 addHole(listOf(a0, b0, c0, d0))
             }
         )
+    }
+
+   suspend fun addCircle(map: GoogleMap) {
+        val circle = map.addCircle(
+            CircleOptions().apply {
+                center(alexandria)
+                radius(50000.0)
+                fillColor(R.color.purple_500)
+                strokeColor(R.color.purple_500)
+                //you can make it clickable + activity have to implement the relevant clicklistner
+            //    clickable(true)
+            }
+        )
+       delay(3000)
+       circle.fillColor = R.color.black
+
     }
 }
