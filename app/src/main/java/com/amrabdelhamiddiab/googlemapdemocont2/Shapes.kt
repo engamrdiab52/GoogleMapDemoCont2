@@ -2,10 +2,7 @@ package com.amrabdelhamiddiab.googlemapdemocont2
 
 import android.graphics.Color
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.delay
 
 class Shapes {
@@ -27,14 +24,22 @@ class Shapes {
     private val d0 = LatLng(31.260762247366973, 29.7579431811633)
 
 
-    private suspend fun addPolyline(map: GoogleMap) {
+    suspend fun addPolyline(map: GoogleMap) {
+        val pattern = listOf(Dot(), Gap(10f)/*, Dash(20f)*/)
+
         val polyline = map.addPolyline(
             PolylineOptions().apply {
                 add(alexandria, cairo, mansoura)
-                width(5f)
+                width(100f)
                 color(Color.BLUE)
                 geodesic(true)
                 clickable(true)
+                pattern(pattern)
+                //is the corner of the two lines round or ...
+              //  jointType(JointType.ROUND)
+                //is the end of the line round...
+             //   startCap(RoundCap())
+             //   endCap(RoundCap())
             }
         )
         delay(3000)

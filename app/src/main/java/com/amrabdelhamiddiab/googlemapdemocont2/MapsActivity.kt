@@ -43,7 +43,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             isZoomControlsEnabled = true
         }
         lifecycleScope.launch{
-            shapes.addCircle(map)
+            shapes.addPolyline(map)
         }
     }
 }
